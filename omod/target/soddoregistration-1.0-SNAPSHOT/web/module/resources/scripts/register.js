@@ -1,5 +1,5 @@
 var app = angular.module('soddoregistration',[]).
-	controller('soddoRegistrationController',['$scope','$http',function($scope,$http){
+	controller('soddoRegistrationController',['$scope','$http','$window',function($scope,$http,$window){
 		// declare forms 
 
 		//method to save patient 
@@ -40,9 +40,14 @@ var app = angular.module('soddoregistration',[]).
 					//}
 			};
 			
+			var ptatts = {
+							'value':$scope.registration.tel,
+							'attributeType':'14d4f066-15f5-102d-96e4-000c29c2a5d7'
+					};
+			
 			var identifier = [{
 					'identifier':$scope.autoidentifier,
-					'identifierType':'c6b18062-27d2-4943-8f34-a5959565a0e6',
+					'identifierType':'05a29f94-c0ed-11e2-94be-8c13b969e334',// openmrs id
 					'location':'6351fcf4-e311-4a19-90f9-35667d99a8af', //registration desk 
 					'preferred':'true'
 			}];
@@ -67,6 +72,28 @@ var app = angular.module('soddoregistration',[]).
 				}).
 					success(function(data,status,headers,config){
 						console.log(data)
+						ptid = data['uuid'];
+						
+						//add patient attributes
+						$http({method:'POST',
+							url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/person/" + ptid + '/attribute',
+							data:JSON.stringify(ptatts),
+							headers:{'Content-Type':'application/json'}
+						}).
+							success(function(data,status,headers,config){
+								console.log('=====atttttsssss====')
+								console.log(data)
+							}).
+							error(function(data,status,headers,config){
+								console.log(data)
+							});
+						
+						//redirect page
+						newurl = '/' + OPENMRS_CONTEXT_PATH + '/coreapps/clinicianfacing/patient.page?patientId=' + ptid;
+						console.log(newurl)
+						//redirect page 
+						$window.location.href= newurl;
+						
 						//clear form 
 						// $scope.soddoReg = $setPristine()
 					}).
@@ -85,7 +112,7 @@ var app = angular.module('soddoregistration',[]).
 			$scope.generateIdentifier = function(){
 				//todo allow addition of many sources 
 				$http({method:'GET',
-					url: '/' + OPENMRS_CONTEXT_PATH + "/module/idgen/generateIdentifier.form?source=2",
+					url: '/' + OPENMRS_CONTEXT_PATH + "/module/idgen/generateIdentifier.form?source=1",
 					headers:{'Content-Type':'application/json'}
 				}).
 					success(function(data,status,headers,config){

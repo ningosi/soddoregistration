@@ -102,6 +102,30 @@
 				<scope>provided</scope>
 				
 			</dependency>
+			
+				<dependency>
+			
+				<groupId>org.openmrs.module</groupId>
+												
+				<artifactId>appui-api</artifactId>
+																								
+				<version>1.1</version>
+												
+				<scope>provided</scope>
+				
+			</dependency>
+						
+			<dependency>
+			
+				<groupId>org.openmrs.module</groupId>
+												
+				<artifactId>referenceapplication-api</artifactId>
+																								
+				<version>1.1</version>
+												
+				<scope>provided</scope>
+				
+			</dependency>
 						
 			<!-- End OpenMRS modules -->
 			

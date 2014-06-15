@@ -1,5 +1,5 @@
    <%
-    	ui.decorateWith("appui","standardEmrPage")
+    	ui.decorateWith("referenceapplication","standardEmrPage")
         ui.includeJavascript("soddoregistration", "angular.js")
         ui.includeJavascript("soddoregistration", "angular-resource.min.js")
         ui.includeJavascript("soddoregistration", "ui-bootstrap-tpls-0.11.0.min.js")   
