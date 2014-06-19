@@ -48,7 +48,8 @@ var app = angular.module('soddoregistration',[]).
 			var identifier = [{
 					'identifier':$scope.autoidentifier,
 					'identifierType':'05a29f94-c0ed-11e2-94be-8c13b969e334',// openmrs id
-					'location':'6351fcf4-e311-4a19-90f9-35667d99a8af', //registration desk 
+					'location': '8d6c993e-c2cc-11de-8d13-0010c6dffd0f', //  location in standalone
+					//'6351fcf4-e311-4a19-90f9-35667d99a8af', //registration desk 
 					'preferred':'true'
 			}];
 			
