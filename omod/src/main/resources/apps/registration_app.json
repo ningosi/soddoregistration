@@ -2,7 +2,7 @@
      {
          "id": "soddoregistration.registerPatient",
          "description": "New patient registration",
-         "label": "Soddo Patient Registration",
+         "label": "Patient Registration",
          "order": 2,
           "extensions": [
             {
