@@ -1,5 +1,25 @@
 var app = angular.module('soddoregistration',[]).
-	controller('soddoRegistrationController',['$scope','$http','$window',function($scope,$http,$window){
+	controller('soddoRegistrationController',['$scope','$http','$window',function($scope,$http,$window,EthiopiantoGregorianConverter){
+		//junk
+		//$scope.myname = JudyTest();
+		$scope.steve = function(){
+			console.log($scope)
+		};
+		
+		$scope.myname = JudyTest('01/11/2006');
+		
+		$scope.lol=function(){
+			mevalue = 'Judy Judy Sleep'
+		};
+		
+		$scope.blurCallback = function(e) {
+			$scope.ethiopiandate = e.target.value 
+			console.log(e);
+			console.log('-----');
+			console.log(e.target.value)
+			alert('Goodbye. Input content is: ' + e.target.value);
+			};
+			
 		// Address selector 
 		$scope.Regions = [
 		     {
@@ -426,7 +446,23 @@ var app = angular.module('soddoregistration',[]).
 		//method to save patient 
 		$scope.save = function(){		
 			//declare variables 
-			console.log($scope.registration) 
+			regobj = $scope
+			console.log(regobj) ;					
+			console.log ($scope.registration.DOB);
+			myo = $scope.registration
+			if (regobj.hasOwnProperty('DOB')){
+				console.log('Tarehe')
+			};
+			
+			//check if patient had Ethiopian registration
+			if('ethiopianDOB' in $scope.registration){
+				//bdate = EthToGreg($scope.registration.ethiopianDOB);
+				//console.log('Ethiopian Date');
+			}else if (regobj.hasOwnProperty('DOB')){
+				bdate = $scope.registration.DOB;
+			};
+			
+			//console.log(bdate);
 
 			var names = [{
 				'givenName':$scope.registration.firstName,
@@ -450,7 +486,7 @@ var app = angular.module('soddoregistration',[]).
 			var personpayload = {
 					'names':names,
 					'addresses':addresses,
-					'birthdate':$scope.registration.DOB,
+					'birthdate':bdate,
 					'gender':$scope.registration.gender,
 					'birthdateEstimated':$scope.registration.exactOrEstimate,
 					'age':$scope.registration.estimatedAge,					
