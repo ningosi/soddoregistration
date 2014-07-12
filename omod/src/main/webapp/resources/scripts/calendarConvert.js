@@ -18,21 +18,21 @@ function GregToEth(){
 
     }
 }
-function EthToGreg(){
+function EthToGreg(ethdate){
     try {
-        var calendar = $.calendars.instance('ethiopian');
-        var date = $('#ethiopianDOB').val().split('/');
-        var year = parseInt(date[2], 10);
+    	var calendar = $.calendars.instance('ethiopian');
+    	var date = ethdate.split('/');
+    	var year = parseInt(date[2], 10);
         var month = parseInt(date[1], 10);
         var day = parseInt(date[0   ], 10);
         var jd = calendar.toJD(year, month, day);
         var gregDate = $.calendars.instance('gregorian').fromJD(jd).toString();
-        $('#gregorian').val(gregDate.replace(/-/g, "/"));
+    	return gregDate;
     }
     catch (e){
-
     }
 }
+
 function GregToGreg(){
     if ($('#gregorianDOB').val() == ''){
 
@@ -46,4 +46,26 @@ function GregToGreg(){
         var newdate = year + "/" + month + "/" + day;
         $('#gregorian').val(newdate);
     }
+}
+
+function JudyTest(ethdate){
+	console.log('Works');
+	var name = ethdate;
+	var calendar = $.calendars.instance('ethiopian');
+	var date = ethdate.split('/');
+	var year = parseInt(date[2], 10);
+    var month = parseInt(date[1], 10);
+    var day = parseInt(date[0   ], 10);
+    var jd = calendar.toJD(year, month, day);
+    var gregDate = $.calendars.instance('gregorian').fromJD(jd).toString();
+	return gregDate;
+}
+
+function gencal(){
+	cal = $('#ethi').calendarsPicker({calendar: $.calendars.instance('ethiopian')}); 
+	return cal
+}
+
+function popvals(){
+	$('#ethi').value = 'mimimimi'
 }

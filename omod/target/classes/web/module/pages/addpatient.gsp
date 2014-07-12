@@ -2,7 +2,8 @@
     	ui.decorateWith("referenceapplication","standardEmrPage")
         ui.includeJavascript("soddoregistration", "angular.js")
         ui.includeJavascript("soddoregistration", "angular-resource.min.js")
-        ui.includeJavascript("soddoregistration", "ui-bootstrap-tpls-0.11.0.min.js")   
+        ui.includeJavascript("soddoregistration", "ui-bootstrap-tpls-0.11.0.min.js")  
+        ui.includeJavascript("soddoregistration", "ui-utils.min.js")        
         ui.includeCss("soddoregistration","style.css")
         ui.includeCss("soddoregistration","jquery.calendars.picker.css")
         ui.includeCss("soddoregistration","bootstrap.min.css")
@@ -18,7 +19,8 @@
         ui.includeJavascript("soddoregistration", "register.js")
         ui.includeJavascript("soddoregistration", "registerValidation.js")
         ui.includeJavascript("soddoregistration", "soddocalendar.js")  
-        ui.includeJavascript("soddoregistration", "calendarConvert.js")            
+        ui.includeJavascript("soddoregistration", "calendarConvert.js")  
+        ui.includeJavascript("soddoregistration", "directives/EthiopianDatePicker.js")
     %>
        
    <script>
@@ -31,6 +33,19 @@
                <legend></legend>
                <h3> Register New Patient </h3>
                <table class="table" border='0'>
+               
+               <tr>
+              <input type="text"  ethiopiandatepicker ng-model="myobj.myvalue" />
+              {{myobj.myvalue}}
+               
+               </tr>
+	               <tr>
+	               {{myname}} <br>
+	               Testing:<input type='text' id='ethi' ng-model='fuck' ng-blur='blurCallback(\$event)'>
+	               {{ff}}
+	               Dates Shit: <input id='selecteddate' ng-model='selecteddate' ng-blur='blurCallback(\$event)'>
+	               <br>
+	               </tr>
                    <tr>
                        <td>
                            <label>Patient Identifier:</label> <br>
@@ -73,6 +88,11 @@
 
                        <td colspan="2">
                        <p>Select patient's birthdate or estimated age:</p>
+							<input type="text" id="ethiopianDOB" ng-blur='blurCallback(\$event)'>	
+							<br>
+						<span><input type="text" ng-value={{ethiopiandate}} value={{ethiopiandate}} style="width: 260px"></span>
+												            
+                    
                        		<section ng-init="tab = 1">
 								<ul class="nav nav-pills">
 								    <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Ethiopian Calender</a></li>
@@ -80,19 +100,17 @@
 								</ul>
 								<div class="panel" ng-show="tab === 1">
 						            <p>
-						            <input type="text" id="ethiopianDOB" ng-model="registration.ethiopianDOB" onblur="EthToGreg()">						            
 						            </p>		            
 						        </div>
 								 <div class="panel" ng-show="tab === 2">	
 						            <p><input type="text" id="datepicker" placeholder="dd-mm-yyyy" ng-model='registration.DOB'>
 						            </p>
 						        </div>	
-						    	<div> 
-									<input type="text" readonly id="gregorian" ng-model='registration.DOB' hidden='hidden'>
-								</div>					        
+						        
+						        <span><input type="text" ng-model='registration.populatedDate' ui-event="{blur:'blurCallback()'}">	        
 							</section>
 							
-							<input type="radio" name="DOB" ng-model='registration.exactOrEstimate' value='True'> Estimated Age: </p>
+							<input type="checkbox" name="DOB" ng-model='registration.exactOrEstimate' value='True'> Estimated Age: </p>
 							<div ng-if="registration.exactOrEstimate"> 
 							<input type="number" ng-model="registration.estimatedAge"  min="0">
 							</div>
