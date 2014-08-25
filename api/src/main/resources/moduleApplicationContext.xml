@@ -31,9 +31,9 @@
 						<ref bean="transactionManager" />
 					</property>
 					<property name="target">
-						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.SoddoRegistrationAppServiceImpl">
+						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.SoddoRegionsServiceImpl">
 							<property name="dao">
-								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateSoddoRegistrationAppDAO">
+								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.SoddoRegionsDAOImpl">
 									<property name="sessionFactory">
 										<ref bean="sessionFactory" />
 									</property>

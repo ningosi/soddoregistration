@@ -4,7 +4,7 @@ function() {
 	$('#ethiopianDOB').calendarsPicker({
 	    calendar: $.calendars.instance('ethiopian'),
 	    showOnFocus: false,
-	    showTrigger: '<button type="button" class="trigger">Ethiopian Calendar</button>' ,
+	    showTrigger: '<button type="button" class="trigger" style="width: 130px">Select Date</button>' ,
 	    onSelect:function(dates){
 	      //to do
 	      $('#registrationDOB').val(dates);

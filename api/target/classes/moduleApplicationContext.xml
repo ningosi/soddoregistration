@@ -31,9 +31,9 @@
 						<ref bean="transactionManager" />
 					</property>
 					<property name="target">
-						<bean class="org.openmrs.module.soddoregistration.api.impl.SoddoRegistrationAppServiceImpl">
+						<bean class="org.openmrs.module.soddoregistration.api.impl.SoddoRegionsServiceImpl">
 							<property name="dao">
-								<bean class="org.openmrs.module.soddoregistration.api.db.hibernate.HibernateSoddoRegistrationAppDAO">
+								<bean class="org.openmrs.module.soddoregistration.api.db.hibernate.SoddoRegionsDAOImpl">
 									<property name="sessionFactory">
 										<ref bean="sessionFactory" />
 									</property>
