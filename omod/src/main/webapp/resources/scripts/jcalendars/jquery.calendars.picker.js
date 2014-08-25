@@ -62,8 +62,8 @@
 			@property disabledClass {string} Class for disabled commands. */
 		defaultRenderer: {
 			picker: '<div class="calendars">' +
-			'<div class="calendars-nav">{link:prev}{link:today}{link:next}</div>{months}' +
-			'{popup:start}<div class="calendars-ctrl">{link:clear}{link:close}</div>{popup:end}' +
+			'<div class="calendars-nav"></div>{months}' +
+			'{popup:start}<div class="calendars-ctrl"></div>{popup:end}' +
 			'<div class="calendars-clear-fix"></div></div>',
 			monthRow: '<div class="calendars-month-row">{months}</div>',
 			month: '<div class="calendars-month"><div class="calendars-month-header">{monthHeader}</div>' +

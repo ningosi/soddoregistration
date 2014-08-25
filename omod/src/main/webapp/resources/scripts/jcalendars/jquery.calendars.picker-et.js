@@ -11,7 +11,6 @@
 		currentText: 'Täna', currentStatus: '',
 		todayText: 'Täna', todayStatus: '',
 		clearText: 'X', clearStatus: '',
-		closeText: 'Sulge', closeStatus: '',
 		yearStatus: '', monthStatus: '',
 		weekText: 'Wk', weekStatus: '',
 		dayStatus: 'DD, M d', defaultStatus: '',

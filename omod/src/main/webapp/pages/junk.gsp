@@ -22,13 +22,17 @@
         ui.includeJavascript("soddoregistration", "calendarConvert.js")  
     %>
 <div id="soddo-reg" ng-app="soddoregistration">
+
 <form name="soddoReg" ng-controller="soddoRegistrationController" class="form-group" >
+
+Mimi:::
 <input type="text" id="ethiopianDOB" ng-model='Ethiopian'>	<br><br>
+
+
 My ID :
 <input type="text" id='registrationDOB' ng-blur='blurCallback(\$event)'>	
 {{ethiopiandate}}				            
 <br>
-<input type="text" ng-value={{ethiopiandate}} hidden='hidden'>	
 
 <br>
 <input class='btn btn-primary' type="submit" ng-click='steve()'/>

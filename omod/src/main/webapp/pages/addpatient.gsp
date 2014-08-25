@@ -33,19 +33,6 @@
                <legend></legend>
                <h3> Register New Patient </h3>
                <table class="table" border='0'>
-               
-               <tr>
-              <input type="text"  ethiopiandatepicker ng-model="myobj.myvalue" />
-              {{myobj.myvalue}}
-               
-               </tr>
-	               <tr>
-	               {{myname}} <br>
-	               Testing:<input type='text' id='ethi' ng-model='fuck' ng-blur='blurCallback(\$event)'>
-	               {{ff}}
-	               Dates Shit: <input id='selecteddate' ng-model='selecteddate' ng-blur='blurCallback(\$event)'>
-	               <br>
-	               </tr>
                    <tr>
                        <td>
                            <label>Patient Identifier:</label> <br>
@@ -78,51 +65,50 @@
                            <span id="lname_error"></span>
                        </td>
                    </tr>
-                   
-                          <tr>
-                       <td>
+           
+                   <tr>
+                    	<td>
                            <p>Gender: </p> <p> <input type="radio" name="gender" ng-model='registration.gender' value='Male' onblur="isGenderValid()"> Male</p>
                            <p> <input type="radio" name="gender" ng-model='registration.gender' value='Female' onblur="isGenderValid()"> Female</p>
                            <span id="gender_error"></span>
                        </td>
-
-                       <td colspan="2">
-                       <p>Select patient's birthdate or estimated age:</p>
-							<input type="text" id="ethiopianDOB" ng-blur='blurCallback(\$event)'>	
-							<br>
-						<span><input type="text" ng-value={{ethiopiandate}} value={{ethiopiandate}} style="width: 260px"></span>
-												            
-                    
-                       		<section ng-init="tab = 1">
+                       
+                   		<td colspan="2">
+		                       <p>Select patient's birthdate OR use estimated age:</p>
+		                       
+		                     <input type="checkbox" name="DOB" ng-model='registration.exactOrEstimate' value='True'> Estimated Age: </p>
+								<div ng-if="registration.exactOrEstimate"> 
+									<input type="number" ng-model="registration.estimatedAge"  min="0">
+								</div>
+								
+								<div ng-hide='registration.exactOrEstimate'>
+								<section ng-init="tab = 1">
 								<ul class="nav nav-pills">
 								    <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Ethiopian Calender</a></li>
 								    <li ng-class="{ active:tab===2 }"><a href ng-click="tab = 2">Gregorian Calender</a></li>
 								</ul>
+								</section>		
 								<div class="panel" ng-show="tab === 1">
-						            <p>
-						            </p>		            
-						        </div>
-								 <div class="panel" ng-show="tab === 2">	
-						            <p><input type="text" id="datepicker" placeholder="dd-mm-yyyy" ng-model='registration.DOB'>
+									<input type="text" id="ethiopianDOB" ng-model='Ethiopian'>	<br><br>
+			                      <input type="text" id='registrationDOB' ng-blur='blurCallback(\$event)'>	                     
+			                      <input type="text" ng-value={{ethiopiandate}} value={{ethiopiandate}} hidden='hidden'>                  
+								</div>                       
+			                     
+			                    <div class="panel" ng-show="tab === 2">	
+						            <p><input type="text" id="datepicker" placeholder="dd-mm-yyyy" ng-model='registration.DOB' ng-blur='clearDateFields(\$event)'>
 						            </p>
 						        </div>	
 						        
-						        <span><input type="text" ng-model='registration.populatedDate' ui-event="{blur:'blurCallback()'}">	        
-							</section>
-							
-							<input type="checkbox" name="DOB" ng-model='registration.exactOrEstimate' value='True'> Estimated Age: </p>
-							<div ng-if="registration.exactOrEstimate"> 
-							<input type="number" ng-model="registration.estimatedAge"  min="0">
-							</div>
-					   </td>					
-             
-                   </tr>    
+			                   </div>
+                   		</td>                   
+                   </tr>
+               
                    <tr>
                        <td><label>Region:</label><br>
                      <span>  <select ng-model='registration.region' ng-options="p.displayName for p in Regions" style="width: 260px" onblur="isRegionValid()"> </select></span>
                            <span id="region_error"></span>
                        </td>
-                        <td><label>Zone: </label> <br>
+                        <td><label>Zone/Special Woreda: </label> <br>
                            <span> <select ng-model='registration.zone' style="width: 260px" 
                            ng-options="c.displayName for c in Zones | filter:{parentId: registration.region.id}" onblur="isZoneValid()"> 
                            </select></span>
@@ -147,10 +133,8 @@
                            <span id="subcity_error"></span>
                        </td>
                    </tr>
-                        <tr>
-					   
-					  
-					             <td>
+                        <tr>			  
+					   <td>
                            <p> <label> House No: </label> <br>
                            <span> <input name="house" type="text" ng-model='registration.house' style="width: 260px"></span>
                        </td>

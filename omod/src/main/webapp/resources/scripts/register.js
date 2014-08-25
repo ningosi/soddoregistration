@@ -1,25 +1,26 @@
 var app = angular.module('soddoregistration',[]).
 	controller('soddoRegistrationController',['$scope','$http','$window',function($scope,$http,$window,EthiopiantoGregorianConverter){
-		//junk
-		//$scope.myname = JudyTest();
-		$scope.steve = function(){
-			console.log($scope)
-		};
-		
-		$scope.myname = JudyTest('01/11/2006');
-		
-		$scope.lol=function(){
-			mevalue = 'Judy Judy Sleep'
-		};
-		
+	
 		$scope.blurCallback = function(e) {
 			$scope.ethiopiandate = e.target.value 
-			console.log(e);
-			console.log('-----');
 			console.log(e.target.value)
-			alert('Goodbye. Input content is: ' + e.target.value);
+			//alert('Goodbye. Input content is: ' + e.target.value);
 			};
 			
+		$scope.clearDateFields = function(e){
+			$scope.ethiopiandate = ''
+		};
+		
+		$scope.addTodo = function(){
+			ids = $scope.Regions.length + 1
+			$scope.Regions.push({
+				'id':ids,
+				'displayName':$scope.todoText
+			});
+			$scope.todoText = '';
+			
+		};	
+		
 		// Address selector 
 		$scope.Regions = [
 		     {
@@ -448,22 +449,29 @@ var app = angular.module('soddoregistration',[]).
 			//declare variables 
 			regobj = $scope
 			console.log(regobj) ;					
-			console.log ($scope.registration.DOB);
-			myo = $scope.registration
-			if (regobj.hasOwnProperty('DOB')){
-				console.log('Tarehe')
-			};
-			
-			//check if patient had Ethiopian registration
-			if('ethiopianDOB' in $scope.registration){
-				//bdate = EthToGreg($scope.registration.ethiopianDOB);
-				//console.log('Ethiopian Date');
-			}else if (regobj.hasOwnProperty('DOB')){
+			myregobj = $scope.registration
+						
+			//check if patient had Ethiopian registration filled 
+			if ($scope.ethiopiandate != ''){
+				//bdate = EthToGreg($scope.ethiopiandate)
+				bdate = $scope.ethiopiandate
+			}
+			else if (myregobj.hasOwnProperty('DOB')){
 				bdate = $scope.registration.DOB;
 			};
+			//check if an estimate age was used 
+				
+			if (myregobj.hasOwnProperty('estimatedAge')){
+				estimatedAge = $scope.registration.estimatedAge
+				today = new Date();
+				console.log(today)
+				dd = today.getDate();
+				mm = today.getMonth() + 1;
+				yyyy = today.getFullYear();
+				newyear = yyyy - estimatedAge
+				bdate = newyear + '-' + mm + '-' + dd;
+			};
 			
-			//console.log(bdate);
-
 			var names = [{
 				'givenName':$scope.registration.firstName,
 				'familyName':$scope.registration.lastName,
@@ -488,8 +496,8 @@ var app = angular.module('soddoregistration',[]).
 					'addresses':addresses,
 					'birthdate':bdate,
 					'gender':$scope.registration.gender,
-					'birthdateEstimated':$scope.registration.exactOrEstimate,
-					'age':$scope.registration.estimatedAge,					
+					//'birthdateEstimated':$scope.registration.exactOrEstimate,
+					//'age':$scope.registration.estimatedAge,					
 					'dead':$scope.registration.dead,
 					'causeOfDeath':"5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 					'deathDate':$scope.registration.deathDate,			

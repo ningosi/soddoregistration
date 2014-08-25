@@ -25,6 +25,7 @@ public class SoddoRegistrationApp extends BaseOpenmrsObject implements Serializa
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	private String displayName;
 	
 	@Override
 	public Integer getId() {
@@ -36,4 +37,11 @@ public class SoddoRegistrationApp extends BaseOpenmrsObject implements Serializa
 		this.id = id;
 	}
 	
+	public String getdisplayName(){
+		return displayName;
+	}
+	
+	public void setdisplayName(String displayName){
+		this.displayName = displayName;
+	}
 }
