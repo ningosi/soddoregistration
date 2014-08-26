@@ -47,7 +47,7 @@
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
 				
-		SoddoRegistrationApp.hbm.xml
+		SoddoRegions.hbm.xml
 				
 	</mappingFiles>
 
