@@ -1,4 +1,4 @@
-   <%
+ <%
     	ui.decorateWith("referenceapplication","standardEmrPage")
         ui.includeJavascript("soddoregistration", "angular.js")
         ui.includeJavascript("soddoregistration", "angular-resource.min.js")
@@ -83,16 +83,16 @@
 								
 								<div ng-hide='registration.exactOrEstimate'>
 								<section ng-init="tab = 1">
-								<ul class="nav nav-pills">
-								    <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Ethiopian Calender</a></li>
-								    <li ng-class="{ active:tab===2 }"><a href ng-click="tab = 2">Gregorian Calender</a></li>
-								</ul>
-								</section>		
-								<div class="panel" ng-show="tab === 1">
-									<input type="text" id="ethiopianDOB" ng-model='Ethiopian'>	<br><br>
-			                      <input type="text" id='registrationDOB' ng-blur='blurCallback(\$event)'>	                     
-			                      <input type="text" ng-value={{ethiopiandate}} value={{ethiopiandate}} hidden='hidden'>                  
-								</div>                       
+                            <ul class="nav nav-pills">
+                                <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Ethiopian Calendar</a></li>
+                                <li ng-class="{ active:tab===2 }"><a href ng-click="tab = 2">Gregorian Calendar</a></li>
+                            </ul>
+                            </section>      
+                            <div class="panel" ng-show="tab === 1">
+                                <input type="text" id="ethiopianDOB" ng-model='Ethiopian'>  <br><br>
+                              <input type="text" id='registrationDOB' hidden='hidden' ng-focus='blurCallback(\$event)'>   
+                              <input type="text" ng-value={{ethiopiandate}} value={{ethiopiandate}} hidden='hidden'>                  
+                            </div>                
 			                     
 			                    <div class="panel" ng-show="tab === 2">	
 						            <p><input type="text" id="datepicker" placeholder="dd-mm-yyyy" ng-model='registration.DOB' ng-blur='clearDateFields(\$event)'>
@@ -155,6 +155,3 @@
        </form>
 
    </div>
-   
-   
-

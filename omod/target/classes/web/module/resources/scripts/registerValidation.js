@@ -146,8 +146,8 @@ function isSubcityValid() {
     return val;
 }
 function validate(){
-var valTotal = isFnameValid() + isMnameValid() + isLnameValid() + isFthnameValid() + isGnameValid() + isTelValid() + isGenderValid() +
-                isGenderValid() + isRegionValid() + isWoredaValid() + isKetenaValid() + isZoneValid() + isKebeleValid() + isSubcityValid();
+var valTotal = isFnameValid() + isMnameValid() + isLnameValid()  + isTelValid() + isGenderValid() +
+                 isRegionValid()  + isZoneValid();
     if(valTotal >= 1){
         alert("Please input the required fields before submitting form");
     }
