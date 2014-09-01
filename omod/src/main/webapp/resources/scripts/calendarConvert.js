@@ -49,13 +49,11 @@ function GregToGreg(){
 }
 
 function JudyTest(ethdate){
-	console.log('Works');
-	var name = ethdate;
 	var calendar = $.calendars.instance('ethiopian');
-	var date = ethdate.split('/');
-	var year = parseInt(date[2], 10);
+	var date = ethdate.split('-');
+	var year = parseInt(date[0], 10);
     var month = parseInt(date[1], 10);
-    var day = parseInt(date[0   ], 10);
+    var day = parseInt(date[2], 10);
     var jd = calendar.toJD(year, month, day);
     var gregDate = $.calendars.instance('gregorian').fromJD(jd).toString();
 	return gregDate;
@@ -66,6 +64,5 @@ function gencal(){
 	return cal
 }
 
-function popvals(){
-	$('#ethi').value = 'mimimimi'
-}
+
+

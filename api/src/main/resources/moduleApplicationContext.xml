@@ -19,7 +19,9 @@
 
 	<!-- Add here beans related to the API context -->
 	
-	
+	<bean class="org.openmrs.ui.framework.StandardModuleUiConfiguration">
+<property name="moduleId" value="soddoregistration"/>
+</bean>
     
 </beans>
 

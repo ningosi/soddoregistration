@@ -1,16 +1,21 @@
 var app = angular.module('soddoregistration',[]).
-	controller('soddoRegistrationController',['$scope','$http','$window',function($scope,$http,$window,EthiopiantoGregorianConverter){
-	
+	controller('soddoRegistrationController',['$scope','$http','$window',function($scope,$http,$window){
+		
+		$scope.value ='jsndfjsd';
+		
+		//$scope.barcode = showbarcode("810202D");
+		
+			
 		$scope.blurCallback = function(e) {
-			$scope.ethiopiandate = e.target.value 
-			console.log(e.target.value)
+			//2006-12-07 is the date to convert to Gregorian yy-mm-dd
+			$scope.ethiopiandate =JudyTest(e.target.value) 
 			//alert('Goodbye. Input content is: ' + e.target.value);
 			};
 			
 		$scope.clearDateFields = function(e){
 			$scope.ethiopiandate = ''
 		};
-		
+				
 		$scope.addTodo = function(){
 			ids = $scope.Regions.length + 1
 			$scope.Regions.push({
