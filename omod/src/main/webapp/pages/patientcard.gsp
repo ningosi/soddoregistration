@@ -8,27 +8,46 @@
         ui.includeCss("soddoregistration","bootstrap.min.css")
         ui.includeCss("soddoregistration","bootstrap-theme.min.css")
         ui.includeCss("soddoregistration","jquery-ui.css")   
-        ui.includeJavascript("soddoregistration", "register.js")     
-        ui.includeJavascript("soddoregistration", "barcode/code39.js") 
-        ui.includeJavascript("uicommons", "services/personService.js")
-    	ui.includeJavascript("uicommons", "directives/select-person.js")                                               
+        ui.includeJavascript("soddoregistration", "barcode/code39.js")  
+        ui.includeJavascript("soddoregistration", "dates/moment.js")                                              
+        ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.js")
+        ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.plus.js")
+        ui.includeJavascript("soddoregistration", "jcalendars/jquery.plugin.js") 
+        ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker.js")
+        ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.ethiopian.min.js")
+        ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker-et.js")
+        ui.includeJavascript("soddoregistration", "calendarConvert.js")     
+        ui.includeJavascript("soddoregistration", "register.js")                                                         
     %>
+    	
+	<script type="text/javascript">
+    var breadcrumbs = [
+        { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
+        { label: "${ ui.format(patient.givenName) } ${ ui.format(patient.middleName) } ${ ui.format(patient.familyName) }" 
+        link: '${ui.pageLink("coreapps", "clinicianfacing/clinicianFacingPatientDashboard" ,[patientId: patient.id])}'}
+    ]
+    
+    var patient = { id: ${ patient.id } };
+    var jq = jQuery;
+	</script>
+	
+	<!-- Include the standard patient header before we get to the specifics of this page -->
+	${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient ]) }
 
-
-   <div id="soddo-reg" ng-app="soddoregistration" ng-init="init('${ patient.patient.uuid }')" >
-       <form name="soddoReg" class='span8' ng-controller="soddoRegistrationController" class="form-group" >
-          
+   <div id="soddo-reg" ng-app="soddoregistration">  
+       <form name="soddoReg" class='span8' ng-controller="soddoRegistrationController" ng-init="init('${patient.uuid }')" class="form-group" >
 	<table style="width:6in" background-color:#FFFFFF" border = 1>
+	
 	 <tr>  
 	 	<td>
 	 	<img src = ${ui.resourceLink("soddoregistration", "images/openMrsLogo.png")} style="width:2in">
 	 	</td>
 	 	
-	 	<td>
-	 	Name: patient.firstname patient.middlename patient.lastname  <br>
-	 	MRN: {{patient.identifier}}  <br>
-	 	Date of Birth: patient.birthdate  <br>
-	 	Sex:{{patient.gender}} <br>
+	 	<td style="width:4in">
+	 	<span>Name: {{person_details.display}} <br> </span>
+	 	MRN: {{cardid}} <br>
+	 	Date of Birth:{{gregdate}} <br>
+	 	Sex:{{person_details.gender}}<br>
 	 	</td>
 	 </tr>
 	 

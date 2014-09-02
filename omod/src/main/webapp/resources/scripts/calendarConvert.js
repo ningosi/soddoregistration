@@ -8,16 +8,17 @@ function GregToEth(){
         var calendar = $.calendars.instance('gregorian');
         var date = $('#gregorianDOB').val().split('/');
         var year = parseInt(date[2], 10);
-        var month = parseInt(date[0], 10);
-        var day = parseInt(date[1], 10);
+        var month = parseInt(date[1], 10);
+        var day = parseInt(date[0], 10);
         var jd = calendar.toJD(year, month, day);
         var ethDate = $.calendars.instance('ethiopian').fromJD(jd).toString();
-        $('#ethiopian').val(ethDate.replace(/-/g, "/"));
+        return ethDate
     }
     catch (e){
 
     }
 }
+
 function EthToGreg(ethdate){
     try {
     	var calendar = $.calendars.instance('ethiopian');

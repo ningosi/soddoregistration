@@ -15,7 +15,6 @@
         ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker.js")
         ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.ethiopian.min.js")
         ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker-et.js")
-        ui.includeJavascript("soddoregistration", "jcalendars/calendarConvert.js")        
         ui.includeJavascript("soddoregistration", "register.js")
         ui.includeJavascript("soddoregistration", "registerValidation.js")
         ui.includeJavascript("soddoregistration", "soddocalendar.js")  
@@ -68,8 +67,8 @@
            
                    <tr>
                     	<td>
-                           <p>Gender: </p> <p> <input type="radio" name="gender" ng-model='registration.gender' value='Male' onblur="isGenderValid()"> Male</p>
-                           <p> <input type="radio" name="gender" ng-model='registration.gender' value='Female' onblur="isGenderValid()"> Female</p>
+                           <p>Gender: </p> <p> <input type="radio" name="gender" ng-model='registration.gender' value='M' onblur="isGenderValid()"> Male</p>
+                           <p> <input type="radio" name="gender" ng-model='registration.gender' value='F' onblur="isGenderValid()"> Female</p>
                            <span id="gender_error"></span>
                        </td>
                        
@@ -116,21 +115,17 @@
                        </td>
                        <td><label>Woreda:</label> <br>
                            <span> <input name="woreda" type="text" ng-model='registration.woreda' style="width: 260px" onblur="isWoredaValid()"> </span>
-                           <span id="woreda_error"></span>
                        </td>
                    </tr>
                    <tr>             
                        <td><label>Kebele: </label><br>
                            <span> <input name="kebele" type="text" ng-model='registration.kebele' style="width: 260px" onblur="isKebeleValid()"> </span>
-                           <span id="kebele_error"></span>
                        </td>
                        <td><label>Ketena/Gott:</label> <br>
                            <span> <input name="ketena" type="text" ng-model='registration.ketena' style="width: 260px" onblur="isKetenaValid()"> </span>
-                           <span id="ketena_error"></span>
                        </td>
                        <td><label>Subcity:</label> <br>
                            <span> <input name="subcity" type="text" ng-model='registration.subcity' style="width: 260px" onblur="isSubcityValid()"> </span>
-                           <span id="subcity_error"></span>
                        </td>
                    </tr>
                         <tr>			  
@@ -141,8 +136,6 @@
                        <td>
                            <label>Telephone: </label> <br>
                            <span> <input name="tel" type="text" ng-model='registration.tel' style="width: 260px" onblur="isTelValid()"> </span>
-                           <span id="tel_error"></span>
-
                        </td>
                        <td>
 					   </td>
