@@ -1,8 +1,11 @@
 <%
     	ui.decorateWith("referenceapplication","standardEmrPage")
-        ui.includeJavascript("soddoregistration", "angular.js")
-        ui.includeJavascript("soddoregistration", "angular-resource.min.js")
-        ui.includeJavascript("soddoregistration", "ui-bootstrap-tpls-0.11.0.min.js")  
+    	
+    	//include angular and plugins 
+        ui.includeJavascript("uicommons", "angular.js")
+        ui.includeJavascript("uicommons", "angular-resource.min.js")
+        ui.includeJavascript("uicommons", "angular-ui/ui-bootstrap-tpls-0.6.0.min.js")  
+        
         ui.includeJavascript("soddoregistration", "ui-utils.min.js")        
         ui.includeCss("soddoregistration","style.css")
         ui.includeCss("soddoregistration","bootstrap.min.css")
@@ -17,25 +20,27 @@
         ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.ethiopian.min.js")
         ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker-et.js")
         ui.includeJavascript("soddoregistration", "calendarConvert.js")     
-        ui.includeJavascript("soddoregistration", "register.js")                                                         
+        ui.includeJavascript("soddoregistration", "patientcard.js")                                                         
     %>
     	
-	<script type="text/javascript">
+<script type="text/javascript">
     var breadcrumbs = [
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-        { label: "${ ui.format(patient.givenName) } ${ ui.format(patient.middleName) } ${ ui.format(patient.familyName) }" 
-        link: '${ui.pageLink("coreapps", "clinicianfacing/clinicianFacingPatientDashboard" ,[patientId: patient.id])}'}
+        { label: "${ ui.escapeJs(patient.patient.familyName) }, ${ ui.escapeJs(patient.patient.givenName) }" ,
+            link: '${ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.patient.id])}'},
+        { label: "${ ui.escapeJs(ui.message("coreapps.task.relationships.label")) }" }
     ]
-    
-    var patient = { id: ${ patient.id } };
-    var jq = jQuery;
-	</script>
+</script>
 	
 	<!-- Include the standard patient header before we get to the specifics of this page -->
-	${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient ]) }
+	${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ]) }
 
-   <div id="soddo-reg" ng-app="soddoregistration">  
-       <form name="soddoReg" class='span8' ng-controller="soddoRegistrationController" ng-init="init('${patient.uuid }')" class="form-group" >
+   <!-- Your page should have a title -->
+	<h3>${ ui.message("soddoregistration.app.patientcard.label") }</h3>
+
+   <div id="patientcard-app" ng-controller="patientCardController" ng-init="init('${patient.patient.uuid }')">  
+       <form name="ptCard" class='span8' class="form-group" >
+	
 	<table style="width:6in" background-color:#FFFFFF" border = 1>
 	
 	 <tr>  
@@ -80,4 +85,6 @@
   }
 get_object("inputdata").innerHTML=DrawCode39Barcode(get_object("inputdata").innerHTML,1);
 /* ]]> */
+
+    angular.bootstrap('#patientcard-app', []);
 </script>
