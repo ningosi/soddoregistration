@@ -37,6 +37,7 @@
    <div id="soddo-reg" ng-app="soddoregistration">  
        <form name="soddoReg" class='span8' ng-controller="soddoRegistrationController" ng-init="init('${patient.uuid }')" class="form-group" >
 	<table style="width:6in" background-color:#FFFFFF" border = 1>
+	
 	 <tr>  
 	 	<td>
 	 	<img src = ${ui.resourceLink("soddoregistration", "images/openMrsLogo.png")} style="width:2in">
