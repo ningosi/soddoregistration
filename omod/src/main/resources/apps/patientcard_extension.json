@@ -4,7 +4,7 @@
 	"extensionPointId": "patientDashboard.overallActions",
 	"type": "link",
 	"label": "soddoregistration.app.patientcard.label",
-	"url": "soddoregistration/patientcard.page?patientId={{patientId.uuid}}", 
+	"url": "soddoregistration/patientcard.page?patientId={{patientId}}", 
 	"icon":  "icon-print",
 	"order": 101,
 	"requiredPrivilege": "App: soddoregistration.registerPatient"

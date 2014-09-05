@@ -33,3 +33,8 @@
 get_object("inputdata").innerHTML=DrawCode39Barcode(get_object("inputdata").innerHTML,1);
 /* ]]> */
 </script>
+
+<script type="text/javascript">
+    // manually bootstrap angular app, in case there are multiple angular apps on a page
+    angular.bootstrap('#soddo-reg', []);
+</script>
