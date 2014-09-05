@@ -30,7 +30,7 @@
        <form name="soddoReg" ng-controller="soddoRegistrationController" class="form-group" >
            <fieldset class="well">
                <legend></legend>
-               <h3> Register New Patient </h3>
+               <h3> Register New Patient</h3>
                <table class="table" border='0'>
                    <tr>
                        <td>
@@ -101,6 +101,22 @@
 			                   </div>
                    		</td>                   
                    </tr>
+                   <tr>
+                   Test Regions:  <select ng-model=myregions style="width: 260px"> </select>
+                   my:  {{myregions}}
+                   
+                   myyy: {{regions}}
+                   
+                   <input type='button' value='Generate Region'  style="width: 260px" ng-click='myregions()'>
+                  
+                  Ha: {{text}}
+                  
+                 <ul ng-repeat =" x in x_regions">
+                 <li> {{x}} </li>
+                 </ul>
+                   
+                   </tr>
+                 
                
                    <tr>
                        <td><label>Region:</label><br>

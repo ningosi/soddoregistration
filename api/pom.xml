@@ -26,6 +26,13 @@
 		
 				
 		<!-- Begin OpenMRS modules -->
+		<dependency>
+		
+			<groupId>org.openmrs.module</groupId>
+									
+			<artifactId>addresshierarchy-api</artifactId>
+															
+		</dependency>
 				
 		<dependency>
 		
