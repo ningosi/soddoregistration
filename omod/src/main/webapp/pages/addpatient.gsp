@@ -100,34 +100,19 @@
 						        
 			                   </div>
                    		</td>                   
-                   </tr>
-                   <tr>
-                   Test Regions:  <select ng-model=myregions style="width: 260px"> </select>
-                   my:  {{myregions}}
-                   
-                   myyy: {{regions}}
-                   
-                   <input type='button' value='Generate Region'  style="width: 260px" ng-click='myregions()'>
-                  
-                  Ha: {{text}}
-                  
-                 <ul ng-repeat =" x in x_regions">
-                 <li> {{x}} </li>
-                 </ul>
-                   
-                   </tr>
-                 
-               
+                   </tr>                                
                    <tr>
                        <td><label>Region:</label><br>
-                     <span>  <select ng-model='registration.region' ng-options="p.displayName for p in Regions" style="width: 260px" onblur="isRegionValid()"> </select></span>
-                           <span id="region_error"></span>
+                       <span>
+                        <select ng-model='registration.region' ng-options=" x.name for x in x_regions"  ng-change="getZones(registration.region)" style="width: 260px" > </select>                  
+                       </span>
                        </td>
                         <td><label>Zone/Special Woreda: </label> <br>
-                           <span> <select ng-model='registration.zone' style="width: 260px" 
-                           ng-options="c.displayName for c in Zones | filter:{parentId: registration.region.id}" onblur="isZoneValid()"> 
-                           </select></span>
-                           <span id="zone_error"></span>
+                         <div ng-if="registration.region">
+                  <span><select ng-model='registration.zone' ng-options=" z.name for z in x_zones" style="width: 260px"> </select>                  
+                   </span>
+                   <div>
+                          
                        </td>
                        <td><label>Woreda:</label> <br>
                            <span> <input name="woreda" type="text" ng-model='registration.woreda' style="width: 260px" onblur="isWoredaValid()"> </span>
