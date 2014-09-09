@@ -1,19 +1,35 @@
 var app = angular.module('soddoregistration',[]).
 	controller('soddoRegistrationController',['$scope','$http','$window',
 	                                          function($scope,$http,$window){	
-		//test
+		
+		//method to get the location data - the Regions section
 		$http({method:'GET',
 			url: '/' + OPENMRS_CONTEXT_PATH + "/module/addresshierarchy/ajax/getChildAddressHierarchyEntries.form?"
 		}).
 		success(function(data,status,headers,config){
 			//data is [{ "name": "Afar" },{ "name": "Amhara" },{ "name": "Benishangul-Gumuz" },{ "name": "Dire Dawa" },{ "name": "Gambela" },{ "name": "Harari" },{ "name": "Oromia" },{ "name": "Somali" },{ "name": "Southern Nations" },{ "name": "Tigray" }]
-			console.log(data)
 			return $scope.x_regions = data
 		}).
 		error(function(data,status,headers,config){
 			console.log(data)
 			});
-		//
+		//  end of regions section 
+		
+		//method to get the zone data 
+		$scope.getZones = function(selectedregion){
+				//console.log(selectedregion)  returns { name: "Amhara" }
+				_selregion = selectedregion['name']
+				$http({method:'GET',
+					url: '/' + OPENMRS_CONTEXT_PATH + "/module/addresshierarchy/ajax/getChildAddressHierarchyEntries.form?searchString=" + _selregion
+				}).
+				success(function(data,status,headers,config){
+					return $scope.x_zones = data
+				}).
+				error(function(data,status,headers,config){
+					console.log(data)
+					});
+			};
+		//end of zone method
 		
 		$scope.blurCallback = function(e) {
 			//2006-12-07 is the date to convert to Gregorian yy-mm-dd
@@ -34,432 +50,7 @@ var app = angular.module('soddoregistration',[]).
 			});
 			$scope.todoText = '';
 			
-		};	
-		
-	
-		
-		// Address selector 
-		$scope.Regions = [
-		     {
-		    	'id':0,
-		    	'displayName':'Addis Ababa'
-		     },
-		     {
-		    	 'id':1,
-			     'displayName':'Afar'
-		     },
-		     {
-		    	 'id':2,
-			     'displayName':'Amhara'
-		     },		     
-		     {
-		    	 'id':3,
-			     'displayName':'Oromia'
-		     },		     
-		     {
-		    	 'id':4,
-			     'displayName':'Benishangul-Gumuz'
-		     },		     
-		     {
-		    	 'id':5,
-			     'displayName':'Dire Dawa'
-		     },
-		     {
-		    	 'id':6,
-			     'displayName':'Gambela'
-		     },		 
-		     {
-		    	 'id':7,
-			     'displayName':'Harari'
-		     },
-		     {
-		    	 'id':8,
-			     'displayName':'Tigray'
-		     },		     {
-		    	 'id':9,
-			     'displayName':'Southern Nations'
-		     },
-		     {
-		    	 'id':10,
-			     'displayName':'Somali'
-		     },
-		];
-		
-		$scope.Zones = [
-		    // Addis Ababa            
-		    {
-		    	'id':0,
-		    	'displayName':'Addis Ababa',
-		    	'parentId':0
-		    },
-		    //Afar
-		    {
-		    	'id':1,
-		    	'displayName':'Administrative Zone 1',
-		    	'parentId':1
-		    },	
-		    {
-		    	'id':2,
-		    	'displayName':'Administrative Zone 2',
-		    	'parentId':1
-		    },
-		    {
-		    	'id':3,
-		    	'displayName':'Administrative Zone 3',
-		    	'parentId':1
-		    },
-		    {
-		    	'id':4,
-		    	'displayName':'Administrative Zone 4',
-		    	'parentId':1
-		    },	
-		    {
-		    	'id':5,
-		    	'displayName':'Administrative Zone 5',
-		    	'parentId':1
-		    },		
-		    // Amhara  region
-		    {
-		    	'id':6,
-		    	'displayName':'Agew Awi',
-		    	'parentId':2
-		    },			    {
-		    	'id':7,
-		    	'displayName':'Bahir Dar',
-		    	'parentId':2
-		    },			    {
-		    	'id':8,
-		    	'displayName':'East Gojjam',
-		    	'parentId':2
-		    },			    {
-		    	'id':9,
-		    	'displayName':'North Gondar',
-		    	'parentId':2
-		    },			    {
-		    	'id':10,
-		    	'displayName':'North Shewa',
-		    	'parentId':2
-		    },			    {
-		    	'id':11,
-		    	'displayName':'North Wollo',
-		    	'parentId':2
-		    },		
-		    // Oromia region			  
-		    {
-		    	'id':24,
-		    	'displayName':'Adama',
-		    	'parentId':3
-		    },		    
-		    {
-		    	'id':25,
-		    	'displayName':'Arsi',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':26,
-		    	'displayName':'Bale',
-		    	'parentId':3
-		    },		    {
-		    	'id':27,
-		    	'displayName':'Borena',
-		    	'parentId':3
-		    },		    
-		    {
-		    	'id':28,
-		    	'displayName':'Burayu',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':29,
-		    	'displayName':'East Hararghe',
-		    	'parentId':3
-		    },   {
-		    	'id':30,
-		    	'displayName':'East Shewa',
-		    	'parentId':3
-		    },   {
-		    	'id':31,
-		    	'displayName':'East Walega',
-		    	'parentId':3
-		    },   {
-		    	'id':32,
-		    	'displayName':'Guji',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':33,
-		    	'displayName':'Horo Gudru Welega',
-		    	'parentId':3
-		    },{
-		    	'id':34,
-		    	'displayName':'Illubabor',
-		    	'parentId':3
-		    },{
-		    	'id':35,
-		    	'displayName':'Jimma',
-		    	'parentId':3
-		    },{
-		    	'id':36,
-		    	'displayName':'Jimma Special Zone',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':37,
-		    	'displayName':'Kelem Welega Zone',
-		    	'parentId':3
-		    },{
-		    	'id':38,
-		    	'displayName':'North Shewa',
-		    	'parentId':3
-		    },{
-		    	'id':39,
-		    	'displayName':'Oromia Special Zone Surrounding Finfinne',
-		    	'parentId':3
-		    },{
-		    	'id':40,
-		    	'displayName':'Southwest Shewa',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':12,
-		    	'displayName':'South Gondar',
-		    	'parentId':3
-		    },			    {
-		    	'id':13,
-		    	'displayName':'South Wollo',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':41,
-		    	'displayName':'West Arsi',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':42,
-		    	'displayName':'West Hararghe',
-		    	'parentId':3
-		    },{
-		    	'id':43,
-		    	'displayName':'West Shewa',
-		    	'parentId':3
-		    },{
-		    	'id':44,
-		    	'displayName':'West Welega',
-		    	'parentId':3
-		    },
-		    {
-		    	'id':14,
-		    	'displayName':'Wag Hemra',
-		    	'parentId':3
-		    },	
-		    {
-		    	'id':15,
-		    	'displayName':'West Gojjam',
-		    	'parentId':3
-		    },
-		    // Benishangui-Gumuz
-		    {
-		    	'id':16,
-		    	'displayName':'Asosa',
-		    	'parentId':4
-		    },	
-		    {
-		    	'id':17,
-		    	'displayName':'Kamashi',
-		    	'parentId':4
-		    },			    {
-		    	'id':18,
-		    	'displayName':'Metekel',
-		    	'parentId':4
-		    },	
-		    // Dire Dawa
-		    {
-		    	'id':19,
-		    	'displayName':'Dire Dawa',
-		    	'parentId':5
-		    },	
-		    // Gambela
-		    {
-		    	'id':20,
-		    	'displayName':'Administrative Zone 1',
-		    	'parentId':6
-		    },	
-		    {
-		    	'id':21,
-		    	'displayName':'Administrative Zone 2',
-		    	'parentId':6
-		    },		    {
-		    	'id':22,
-		    	'displayName':'Administrative Zone 3',
-		    	'parentId':6
-		    },
-		    //Harari
-		    {
-		    	'id':23,
-		    	'displayName':'Harari',
-		    	'parentId':7
-		    },
-		    //Somali Region
-		    {
-		    	'id':45,
-		    	'displayName':'Afder',
-		    	'parentId':10
-		    },
-		    {
-		    	'id':46,
-		    	'displayName':'Jarar',
-		    	'parentId':10
-		    },		    {
-		    	'id':47,
-		    	'displayName':'Nogob',
-		    	'parentId':10
-		    },		    {
-		    	'id':48,
-		    	'displayName':'Shabelle',
-		    	'parentId':10
-		    },		    {
-		    	'id':49,
-		    	'displayName':'Faafan',
-		    	'parentId':10
-		    },		    {
-		    	'id':50,
-		    	'displayName':'Korahe',
-		    	'parentId':10
-		    },
-		    {
-		    	'id':51,
-		    	'displayName':'Liben',
-		    	'parentId':10
-		    },{
-		    	'id':52,
-		    	'displayName':'Sitti',
-		    	'parentId':10
-		    },
-		    {
-		    	'id':53,
-		    	'displayName':'Doolo',
-		    	'parentId':10
-		    },
-		    // Southern Nations
-		    {
-		    	'id':54,
-		    	'displayName':'Bench Maji',
-		    	'parentId':9
-		    },
-		    {
-		    	'id':55,
-		    	'displayName':'Dawro',
-		    	'parentId':9
-		    },		    {
-		    	'id':56,
-		    	'displayName':'Debub(South)Omo',
-		    	'parentId':9
-		    },		    {
-		    	'id':57,
-		    	'displayName':'Gamo Gofa',
-		    	'parentId':9
-		    },		    {
-		    	'id':58,
-		    	'displayName':'Gedeo',
-		    	'parentId':9
-		    },		    {
-		    	'id':59,
-		    	'displayName':'Gurage',
-		    	'parentId':9
-		    },		    {
-		    	'id':60,
-		    	'displayName':'Hadiya',
-		    	'parentId':9
-		    },		    {
-		    	'id':61,
-		    	'displayName':'Kembata Tembaro',
-		    	'parentId':9
-		    },		    {
-		    	'id':62,
-		    	'displayName':'Keffa',
-		    	'parentId':9
-		    },		    {
-		    	'id':63,
-		    	'displayName':'Keficho Shekicho',
-		    	'parentId':9
-		    },		    {
-		    	'id':64,
-		    	'displayName':'Sheka',
-		    	'parentId':9
-		    },
-		    {
-		    	'id':65,
-		    	'displayName':'Sidama',
-		    	'parentId':9
-		    },   {
-		    	'id':66,
-		    	'displayName':'Sita',
-		    	'parentId':9
-		    },   {
-		    	'id':67,
-		    	'displayName':'Wolayita',
-		    	'parentId':9
-		    },   {
-		    	'id':68,
-		    	'displayName':'Alaba special Woreda',
-		    	'parentId':9
-		    },   {
-		    	'id':69,
-		    	'displayName':'Amaro special Woreda',
-		    	'parentId':9
-		    },
-		    {
-		    	'id':70,
-		    	'displayName':'Basketo special Woreda',
-		    	'parentId':9
-		    },{
-		    	'id':71,
-		    	'displayName':'Burji special Woreda',
-		    	'parentId':9
-		    },{
-		    	'id':72,
-		    	'displayName':'Dirashe special Woreda',
-		    	'parentId':9
-		    },
-		    {
-		    	'id':73,
-		    	'displayName':'Konso special Woreda',
-		    	'parentId':9
-		    },{
-		    	'id':74,
-		    	'displayName':'Konta special Woreda',
-		    	'parentId':9
-		    },
-		    {
-		    	'id':75,
-		    	'displayName':'Yem special Woreda',
-		    	'parentId':9
-		    },
-		    // Tigray region
-		    {
-		    	'id':76,
-		    	'displayName':'Central Tigray',
-		    	'parentId':8
-		    },
-		    {
-		    	'id':77,
-		    	'displayName':'East Tigray',
-		    	'parentId':8
-		    },  {
-		    	'id':78,
-		    	'displayName':'Mekele',
-		    	'parentId':8
-		    },  {
-		    	'id':79,
-		    	'displayName':'South Tigray',
-		    	'parentId':8
-		    },
-		    {
-		    	'id':80,
-		    	'displayName':'West Tigray',
-		    	'parentId':8
-		    },
-		];
+		};			
 		
 		//method to save patient 
 		$scope.save = function(){		
@@ -646,22 +237,8 @@ var app = angular.module('soddoregistration',[]).
 					//console.log(data)
 					});	
 				}; //end of init method
-				
-				//get the regions listed in the address hierarchy
-				$scope.myregions = function(){
-					regions = []
-					$http({method:'GET',
-						url: '/' + OPENMRS_CONTEXT_PATH + "/module/addresshierarchy/ajax/getChildAddressHierarchyEntries.form?"
-					}).
-					success(function(data,status,headers,config){
-						//data is [{ "name": "Afar" },{ "name": "Amhara" },{ "name": "Benishangul-Gumuz" },{ "name": "Dire Dawa" },{ "name": "Gambela" },{ "name": "Harari" },{ "name": "Oromia" },{ "name": "Somali" },{ "name": "Southern Nations" },{ "name": "Tigray" }]
-						console.log(data)
-						return $scope.regions = data
-					}).
-					error(function(data,status,headers,config){
-						console.log(data)
-						});
-				};
+					
+			
 								
 				
 	}]);
