@@ -236,10 +236,7 @@ var app = angular.module('soddoregistration',[]).
 				error(function(data,status,headers,config){
 					//console.log(data)
 					});	
-				}; //end of init method
-					
-			
-								
+				}; //end of init method							
 				
 	}]);
 
