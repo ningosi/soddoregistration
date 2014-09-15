@@ -25,7 +25,13 @@
    <script>
     	var jq = jQuery;
    </script>
-  
+  <script type="text/javascript">
+    var breadcrumbs = [
+        { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
+    ]
+
+</script>
+
    <div id="soddo-reg" ng-app="soddoregistration">
        <form name="soddoReg" ng-controller="soddoRegistrationController" class="form-group" >
            <fieldset class="well">
