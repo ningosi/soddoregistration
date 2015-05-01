@@ -1,4 +1,5 @@
  <%
+
     	ui.decorateWith("referenceapplication","standardEmrPage")
         ui.includeJavascript("soddoregistration", "angular.js")
         ui.includeJavascript("soddoregistration", "angular-resource.min.js")

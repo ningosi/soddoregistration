@@ -12,7 +12,7 @@
                 "label": "soddoregistration.app.registerPatient.label",
                 "url": "soddoregistration/addpatient.page",
                 "icon": "icon-user",
-                "requiredPrivilege": "App: soddoregistration.registerPatient"
+                "requiredPrivilege": "App: referenceapplication.vitals"
             }
         ]
      }

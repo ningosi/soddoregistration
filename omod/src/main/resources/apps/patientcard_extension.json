@@ -7,7 +7,7 @@
 	"url": "soddoregistration/patientcard.page?patientId={{patient.patientId}}",  
 	"icon":  "icon-print",
 	"order": 101,
-	"requiredPrivilege": "App: soddoregistration.registerPatient"
+	"requiredPrivilege": "App: referenceapplication.vitals"  
 	}
 ]
 
