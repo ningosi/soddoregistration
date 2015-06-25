@@ -1,5 +1,6 @@
 angular.module('patientcontactdetailsApp',[])
-.controller('patientcontactController',function($scope,$http,$window){
+.controller('patientcontactController',function($scope,$http,$window){	
+	
 	//method to get the location data - the Regions section
 	$http({method:'GET',
 		url: '/' + OPENMRS_CONTEXT_PATH + "/module/addresshierarchy/ajax/getChildAddressHierarchyEntries.form?"
@@ -10,7 +11,10 @@ angular.module('patientcontactdetailsApp',[])
 	error(function(data,status,headers,config){
 		console.log(data)
 		});
-	//  end of regions section 
+	//  end of regions section	
+	
+	//attempt to preload the region for patient 
+	//$scope.registration.zone = $scope.x_regions[0]
 	
 	//method to get the zone data 
 	$scope.getZones = function(selectedregion){
@@ -32,13 +36,29 @@ angular.module('patientcontactdetailsApp',[])
 			//get the person uuid
 			$scope.thisPersonUuid = personUuid;
 			
+			//get person details for the object 
+			$http({method:'GET',
+				url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/person/" + personUuid ,
+				headers:{'Content-Type':'application/json'}
+				}).
+				success(function(data,status,headers,config){
+					console.log(data)
+				}).
+				error(function(data,status,headers,config){
+						//console.log(data)
+				});	
+			
 			//get the address for patient 			
 			$http({method:'GET',
 				url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/person/" + personUuid + '/address',
 				headers:{'Content-Type':'application/json'}
 				}).
 			success(function(data,status,headers,config){
+				//console.log(data['results'][0])
+				console.log('/////')
 				person_address = data['results'][0];
+				//console.log(person_address['address1'])
+
 				$scope.region = person_address['stateProvince']
 				$scope.zone = person_address['address1']
 				$scope.woreda = person_address['countyDistrict']
@@ -79,6 +99,9 @@ angular.module('patientcontactdetailsApp',[])
 			
 		//Save method
 		$scope.save = function(personUuid){
+			
+			//console.log($scope)
+			
 			//rest objects
 			address_payload = [{
 				'stateProvince': $scope.region.name,
@@ -104,7 +127,10 @@ angular.module('patientcontactdetailsApp',[])
 				headers:{'Content-Type':'application/json'}
 			}).
 				success(function(data,status,headers,config){
-					console.log('-----')
+					//console.log('-----')
+					
+					//clear the tel object 
+					//$scope.tel = ''
 					console.log(data)
 				}).
 				error(function(data,status,headers,config){
@@ -118,6 +144,9 @@ angular.module('patientcontactdetailsApp',[])
 				headers:{'Content-Type':'application/json'}
 				}).
 			success(function(data,status,headers,config){
+				console.log('Saving now')
+				console.log(data)
+
 				myperson_address = data['results'][0];
 				myuuid = myperson_address['uuid']
 				//save
@@ -132,6 +161,7 @@ angular.module('patientcontactdetailsApp',[])
 					}).
 					error(function(data,status,headers,config){
 						console.log(data)
+						console.log('Error saving data')
 					});	
 			}).
 			error(function(data,status,headers,config){
@@ -140,7 +170,28 @@ angular.module('patientcontactdetailsApp',[])
 			
 			//redirect page
 			newurl = '/' + OPENMRS_CONTEXT_PATH + '/coreapps/clinicianfacing/patient.page?patientId=' + personUuid;
+			//$route.reload(newurl);
+			$window.location.reload()
 			$window.location.href= newurl;
+			
 		}
+		
+		//end save
+		
+		//method for getting an identifier 
+		$scope.generateIdentifier = function(){
+			//todo allow addition of many sources 
+			$http({method:'GET',
+				url: '/' + OPENMRS_CONTEXT_PATH + "/module/idgen/generateIdentifier.form?source=1",
+				headers:{'Content-Type':'application/json'}
+			}).
+				success(function(data,status,headers,config){
+					identifier = data['identifiers'][0]
+					return $scope.autoidentifier = identifier
+				}).
+				error(function(data,status,headers,config){
+					console.log(data)
+				});	
+		}; //end of identifier method 
 		
 });

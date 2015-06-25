@@ -56,7 +56,8 @@ var app = angular.module('soddoregistration',[]).
 		$scope.save = function(){		
 			//declare variables 
 			regobj = $scope
-			//console.log(regobj) ;		
+			//console.log(JSON.stringify($scope.registration)) ;
+			
 			myregobj = $scope.registration
 						
 			//check if patient had Ethiopian registration filled 
@@ -65,14 +66,20 @@ var app = angular.module('soddoregistration',[]).
 				bdate = $scope.ethiopiandate
 			}
 			else if (myregobj.hasOwnProperty('DOB')){
-				bdate = $scope.registration.DOB;
+				//format date to yyyy-mm-dd
+				var gregDate = $scope.registration.DOB.split('-');
+				var yy = gregDate[2]
+			    var mm = gregDate[1]
+			    var dd = gregDate[0]
+				bdate= yy + '-' + mm + '-' + dd
 			};
+			
 			//check if an estimate age was used 
 				
 			if (myregobj.hasOwnProperty('estimatedAge')){
 				estimatedAge = $scope.registration.estimatedAge
 				today = new Date();
-				console.log(today)
+				//console.log(today)
 				dd = today.getDate();
 				mm = today.getMonth() + 1;
 				yyyy = today.getFullYear();
@@ -110,7 +117,7 @@ var app = angular.module('soddoregistration',[]).
 					'causeOfDeath':"5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 					'deathDate':$scope.registration.deathDate,			
 			};
-			
+						
 			var ptatts = {
 							'value':$scope.registration.tel,
 							'attributeType':'14d4f066-15f5-102d-96e4-000c29c2a5d7'

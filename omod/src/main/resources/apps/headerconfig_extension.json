@@ -1,0 +1,11 @@
+[
+    {
+        "id": "soddoregistration.configureStandardHeader",
+        "extensionPointId": "org.openmrs.module.appui.header.config",
+        "type": "config",
+        "order": -1000,
+        "extensionParams": {
+            "logo-icon-url": "/ms/uiframework/resource/soddoregistration/images/soddoLogo.png"      
+        }
+    }
+]

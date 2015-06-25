@@ -1,72 +1,164 @@
 <%
-    ui.decorateWith("referenceapplication", "standardEmrPage")
+    ui.decorateWith("appui", "standardEmrPage")
+    ui.includeCss("soddoregistration","jquery-ui.css")
+	ui.includeCss("soddoregistration","style.css")
+	ui.includeCss("soddoregistration","jquery.calendars.picker.css")
+    ui.includeCss("soddoregistration","bootstrap.min.css")
+    ui.includeCss("soddoregistration","bootstrap-theme.min.css")
+    ui.includeCss("soddoregistration","jquery-ui.css")
     ui.includeJavascript("soddoregistration", "angular.js")
 	ui.includeJavascript("soddoregistration", "angular-resource.min.js")
 	ui.includeJavascript("soddoregistration", "ui-bootstrap-tpls-0.11.0.min.js")
-	ui.includeJavascript("soddoregistration", "ui-utils.min.js")
-	ui.includeCss("soddoregistration","jquery-ui.css")
+	ui.includeJavascript("soddoregistration", "ui-utils.min.js")	
     ui.includeJavascript("soddoregistration", "controllers/editpatientcontact.js")
+    ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.js")
+    ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.plus.js")
+    ui.includeJavascript("soddoregistration", "jcalendars/jquery.plugin.js")
+    ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker.js")
+    ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.ethiopian.min.js")
+    ui.includeJavascript("soddoregistration", "jcalendars/jquery.calendars.picker-et.js")    
+    ui.includeJavascript("soddoregistration", "soddocalendar.js")  
+    ui.includeJavascript("soddoregistration", "calendarConvert.js")  
+    ui.includeJavascript("soddoregistration", "directives/EthiopianDatePicker.js")
+    
+    ui.includeJavascript("uicommons", "handlebars/handlebars.min.js", Integer.MAX_VALUE - 1);
+    ui.includeJavascript("uicommons", "navigator/validators.js", Integer.MAX_VALUE - 19)
+    ui.includeJavascript("uicommons", "navigator/navigator.js", Integer.MAX_VALUE - 20)
+    ui.includeJavascript("uicommons", "navigator/navigatorHandlers.js", Integer.MAX_VALUE - 21)
+    ui.includeJavascript("uicommons", "navigator/navigatorModels.js", Integer.MAX_VALUE - 21)
+    ui.includeJavascript("uicommons", "navigator/navigatorTemplates.js", Integer.MAX_VALUE - 21)
+    ui.includeJavascript("uicommons", "navigator/exitHandlers.js", Integer.MAX_VALUE - 22);
     
 %>
-<script type="text/javascript">
-    var breadcrumbs = [
+
+  <script type="text/javascript">    
+      var breadcrumbs = [
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-        { label: "${ ui.format(patient.patient.givenName) } ${ ui.format(patient.patient.middleName) } ${ ui.format(patient.patient.familyName) }" 
-        link: '${ui.pageLink("coreapps", "clinicianfacing/clinicianFacingPatientDashboard" ,[patientId: patient.patient.id])}'}
-    ]
-    var patient = { id: ${ patient.id } };
+        { label: "${ ui.message("soddoregistration.edit.label") }", link: "${ ui.pageLink("soddoregistration", "addpatient") }" }
+    ];
+
 </script>
 
 ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ]) }
 
-<div class="clear"></div>
+<div id="soddo-reg" class ='container' ng-app="patientcontactdetailsApp" ng-controller="patientcontactController" ng-init="init('${patient.patient.uuid}')">
+ 
+<form class="form-group" >
+           <fieldset class="well">
+               <legend></legend>
+               <h3> Edit Patient</h3>
+               <table class="table" border='0'>
 
-<div id="soddo-reg" ng-app="patientcontactdetailsApp" ng-controller="patientcontactController" ng-init="init('${patient.patient.uuid }')">
-<form class='span8'>
-	<table>
- <tr>
+                   <tr>
+                       <td><label>First Name:</label><br>
+                           <span><input name="fname"  type="text" ng-model='registration.firstName' style="width: 260px" onblur="isFnameValid()"></span>
+                           <span id="fname_error"></span>
+                       </td>
+                       <td><label>Father's Name:</label><br>
+                           <span><input name="mname" type="text" ng-model='registration.middleName' style="width: 260px" onblur="isMnameValid()"></span>
+                           <span id="mname_error"></span>
+                       </td>
+                       <td ><label>GrandFather's Name:</label><br>
+                           <span><input name="lname" type="text" ng-model='registration.lastName' style="width: 260px" onblur="isLnameValid()"></span>
+                           <span id="lname_error"></span>
+                       </td>
+                   </tr>
+           
+                   <tr>
+                    	<td>
+                    							
+					   
+                           <p>Gender: </p> <p> <input type="radio" name="gender" ng-model='registration.gender' value='M' onblur="isGenderValid()"> Male</p>
+                           <p> <input type="radio" name="gender" ng-model='registration.gender' value='F' onblur="isGenderValid()"> Female</p>
+                           <span id="gender_error"></span>
+                       </td>
+                       
+                   		<td colspan="2">
+		                       <p>Select patient's birthdate OR use estimated age:</p>
+		                       
+		                     <input type="checkbox" name="DOB" ng-model='registration.exactOrEstimate' value='True'> Estimated Age: </p>
+								<div ng-if="registration.exactOrEstimate"> 
+									<input type="number" ng-model="registration.estimatedAge"  min="0">
+								</div>
+								
+								<div ng-hide='registration.exactOrEstimate'>
+								<section ng-init="tab = 1">
+                            <ul class="nav nav-pills">
+                                <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Ethiopian Calendar</a></li>
+                                <li ng-class="{ active:tab===2 }"><a href ng-click="tab = 2">Gregorian Calendar</a></li>
+                            </ul>
+                            </section>      
+                            <div class="panel" ng-show="tab === 1">
+                                <input type="text" id="ethiopianDOB" ng-model='Ethiopian'>  <br><br>
+                              <input type="text" id='registrationDOB' hidden='hidden' ng-focus='blurCallback(\$event)'>   
+                              <input type="text" ng-value={{ethiopiandate}} value={{ethiopiandate}} hidden='hidden'>                  
+                            </div>                
+			                     
+			                    <div class="panel" ng-show="tab === 2">	
+						            <p><input type="text" id="datepicker" placeholder="dd-mm-yyyy" ng-model='registration.DOB' ng-blur='clearDateFields(\$event)'>
+						            </p>
+						        </div>	
+						        
+			                   </div>
+                   		</td>                   
+                   </tr>                                
+                   <tr>
                        <td><label>Region:</label><br>
                        <span>
-                        <select ng-model='region' ng-value={{region}} ng-options=" x.name for x in x_regions" ng-change="getZones(region)" style="width: 260px" > </select>                  
+                        <select ng-model='registration.region' ng-options=" x.name for x in x_regions"  ng-change="getZones(registration.region)" style="width: 260px" > </select>                  
                        </span>
                        </td>
                         <td><label>Zone/Special Woreda: </label> <br>
                          <div ng-if="registration.region">
-                  <span><select ng-model='zone' ng-value={{zone}} ng-options=" z.name for z in x_zones" style="width: 260px"> </select>                  
+                  <span><select ng-model='registration.zone' ng-options=" z.name for z in x_zones" style="width: 260px"> </select>                  
                    </span>
                    <div>
                           
                        </td>
                        <td><label>Woreda:</label> <br>
-                           <span> <input name="woreda" type="text" ng-value={{woreda}} ng-model='woreda' placeholder ={{woreda}} style="width: 260px" onblur="isWoredaValid()"> </span>
+                           <span> <input name="woreda" type="text" ng-model='registration.woreda' style="width: 260px" onblur="isWoredaValid()"> </span>
                        </td>
                    </tr>
                    <tr>             
                        <td><label>Kebele: </label><br>
-                           <span> <input name="kebele" type="text" ng-value={{kebele}} ng-model='kebele' placeholder ={{kebele}}  style="width: 260px" onblur="isKebeleValid()"> </span>
+                           <span> <input name="kebele" type="text" ng-model='registration.kebele' style="width: 260px" onblur="isKebeleValid()"> </span>
                        </td>
                        <td><label>Ketena/Gott:</label> <br>
-                           <span> <input name="ketena" type="text" ng-value={{ketena}} ng-model='ketena' placeholder ={{ketena}} style="width: 260px" onblur="isKetenaValid()"> </span>
+                           <span> <input name="ketena" type="text" ng-model='registration.ketena' style="width: 260px" onblur="isKetenaValid()"> </span>
                        </td>
                        <td><label>Subcity:</label> <br>
-                           <span> <input name="subcity" type="text" ng-value={{subcity}} ng-model='subcity' placeholder ={{subcity}} style="width: 260px" onblur="isSubcityValid()"> </span>
+                           <span> <input name="subcity" type="text" ng-model='registration.subcity' style="width: 260px" onblur="isSubcityValid()"> </span>
                        </td>
                    </tr>
                         <tr>			  
 					   <td>
                            <p> <label> House No: </label> <br>
-                           <span> <input name="house" type="text" ng-value={{house}} ng-model='house' placeholder ={{house}} style="width: 260px"></span>
+                           <span> <input name="house" type="text" ng-model='registration.house' style="width: 260px"></span>
                        </td>
                        <td>
                            <label>Telephone: </label> <br>
-                           <span> <input name="tel" type="text" ng-value={{tel}} ng-model='tel' placeholder ={{tel}} style="width: 260px" onblur="isTelValid()"> </span>
+                           <span> <input name="tel" type="text" ng-model='registration.tel' style="width: 260px" onblur="isTelValid()"> </span>
                        </td>
                        <td>
+                       <br>
+                       <br>
+                       <span> Check if patient is dead <input type="checkbox" ng-model='registration.dead' ng-value='True'>  </span>    
+							<div ng-if="registration.dead"> 
+								Cause of Death: <input type='text' ng-required="true"  ng-model='registration.causeOfDeath'> <br>
+								Date of Death : <input type="date" ng-model ='registration.deathDate'>
+							</div>
 					   </td>
                    </tr>
 
                </table>
                <input class='btn btn-default' type="submit" ng-click ="save('${patient.patient.uuid }')" value="Update Contact Details"/>
                <input class='btn btn-primary' type="submit" ng-click ="cancel('${patient.patient.uuid }')"  value="Cancel"/>           
-</form>
+       
+           <input class='btn btn-primary' type="submit" ng-click ="save()" onclick="validate()" value="Save Patient"/>
+		</fieldset>
+           
+       </form>
+       
+                 
+       
 </div>
